@@ -1,0 +1,18 @@
+<h2>RepissuesController#index</h2>
+
+<table class="issues">
+    <tr> 
+	<% @resissues[1].each_key do |k|%>
+	<td> <%= render_title(k) %> </td>
+	<% end %>
+    </tr>
+    
+    <% @resissues.each do |is| %>
+    <tr>	
+	<% is.each_pair do |k,v| %>
+	<td><%= render_issue(k,v) %></td>
+	<% end %>
+    </tr>
+    <% end %>
+    
+</table>
