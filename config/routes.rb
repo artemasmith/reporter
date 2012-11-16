@@ -1,3 +1,6 @@
 # Plugin's routes
 # See: http://guides.rubyonrails.org/routing.html
-resources :issue_reporter
+
+resources :issues_reporter
+
+#match '/issues_reporter', :to => "issues_reporter#index"

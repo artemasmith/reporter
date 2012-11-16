@@ -1,6 +1,6 @@
 Redmine::Plugin.register :reporter do
   name 'Reporter plugin'
-  author 'Author name'
+  author 'Artem Kuznetsov'
   description 'This is a plugin for Redmine'
   version '0.0.1'
   url 'http://example.com/path/to/plugin'
