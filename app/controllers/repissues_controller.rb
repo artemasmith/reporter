@@ -55,12 +55,19 @@ class RepissuesController < ApplicationController
 		
 		#change user id to name, if group - User class not working :(
 		# we shoul use Group class
-		us=User.find_by_id(issue[:assigned_to_id])
-		if us.blank?
-		    us=Group.find_by_id(issue[:assigned_to_id])
-		end
-		usname=us.lastname + " " + us.firstname
-		temp[:assigned_to_id]=usname #issue[:assigned_to_id]
+		#us=User.find_by_id(issue[:assigned_to_id])
+		#path =""
+		#if us.blank?
+		    #group
+		    us = Group.find_by_id(issue[:assigned_to_id])
+		    #path = link_to us.lastname, groups_path(issue[:assigned_to_id])
+		#    path = us.lastname
+		#else
+		    #user
+		#    path = us.lastname + " " + us.firstname
+		#end
+				
+		temp[:assigned_to_id]= issue[:assigned_to_id]
 		temp[:project_id]=issue[:project_id]
 		temp[:done_ratio]=issue[:done_ratio]
 		temp[:start_date]=issue[:start_date]

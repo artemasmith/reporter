@@ -20,8 +20,18 @@ def render_issue(k,v)
 #	    res=v+'p'
 	when :project_id
 	    res=Project.find_by_id(v).name
-#	when :assigned_to_id
-#	    res=User.find_by_id(v).lastname
+	when :assigned_to_id
+	    us=User.find_by_id(v)
+	    path=""
+	    if us.blank?
+		us=Group.find_by_id(v)
+		path = group_path(v)
+		#path="a"
+	    else
+		path = user_path(v)
+		#path="3"
+	    end
+	    res= link_to us.lastname + " " + us.firstname, path
 	    #res=u[:firstname]
 	when :subject
 	    res = link_to v, issue_path(Issue.find_by_subject(v))
