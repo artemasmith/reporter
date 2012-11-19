@@ -54,7 +54,7 @@ class RepissuesController < ApplicationController
 		#path =""
 		#if us.blank?
 		    #group
-		    us = Group.find_by_id(issue[:assigned_to_id])
+		    #us = Group.find_by_id(issue[:assigned_to_id])
 		    #path = link_to us.lastname, groups_path(issue[:assigned_to_id])
 		#    path = us.lastname
 		#else

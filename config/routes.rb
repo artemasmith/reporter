@@ -3,6 +3,8 @@
 
 
 resources :repissues
+#match 'repissues', :to => "RepissuesController#index"
+#match 'redmine/repissues', :to => "RepissuesController#index"
 
-#match '/issues_reporter', :to => "issues_reporter#index"
+
 

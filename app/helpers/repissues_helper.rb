@@ -21,17 +21,25 @@ def render_issue(k,v)
 	when :project_id
 	    res=Project.find_by_id(v).name
 	when :assigned_to_id
-	    us=User.find_by_id(v)
-	    path=""
-	    if us.blank?
-		us=Group.find_by_id(v)
-		path = group_path(v)
-		#path="a"
+	    if !v.blank?
+		us=User.find_by_id(v)
+		path=""
+		usname=""
+		if us.blank?
+		    us=Group.find_by_id(v)
+		    path = group_path(v)
+		    usname=us.lastname
+		    #path="a"
+	    
+		else
+		    path = user_path(v)
+		    usname=us.firstname + " " + us.lastname
+		    #path="3"
+		end
 	    else
-		path = user_path(v)
-		#path="3"
+		return "no performer"
 	    end
-	    res= link_to us.lastname + " " + us.firstname, path
+	    res= link_to usname, path
 	    #res=u[:firstname]
 	when :subject
 	    res = link_to v, issue_path(Issue.find_by_subject(v))
