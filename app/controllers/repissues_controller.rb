@@ -52,7 +52,15 @@ class RepissuesController < ApplicationController
 		
 		temp[:id]=issue[:id]
 		temp[:subject]=issue[:subject]
-		temp[:assigned_to_id]=issue[:assigned_to_id]
+		
+		#change user id to name, if group - User class not working :(
+		# we shoul use Group class
+		us=User.find_by_id(issue[:assigned_to_id])
+		if us.blank?
+		    us=Group.find_by_id(issue[:assigned_to_id])
+		end
+		usname=us.lastname + " " + us.firstname
+		temp[:assigned_to_id]=usname #issue[:assigned_to_id]
 		temp[:project_id]=issue[:project_id]
 		temp[:done_ratio]=issue[:done_ratio]
 		temp[:start_date]=issue[:start_date]

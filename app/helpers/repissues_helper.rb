@@ -1,5 +1,7 @@
 module RepissuesHelper
 
+include ApplicationHelper
+
 def render_title(k)
     s= case k
     when :assigned_to_id then :performer
@@ -14,19 +16,19 @@ def render_issue(k,v)
 #    else v
 #    end
     case k
-	when :assigned_to_id
-	    u=User.find_by_id(v)
-#	    res=u[:firstname]
+#	when :done_ratio
+#	    res=v+'p'
+	when :project_id
+	    res=Project.find_by_id(v).name
+#	when :assigned_to_id
+#	    res=User.find_by_id(v).lastname
+	    #res=u[:firstname]
 	when :subject
 	    res = link_to v, issue_path(Issue.find_by_subject(v))
 	else return v
     end
-#    return res
+    return res
+return v
 end 
-
-def user_name(id)
- u=User.find_by_id(id)
- res=u[:firstname] + " " +u[lastname]
-end
 
 end
