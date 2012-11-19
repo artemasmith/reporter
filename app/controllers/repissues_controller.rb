@@ -8,11 +8,6 @@ class RepissuesController < ApplicationController
     @resissues=[]
     j=0
 
-
-    
-
-
-
     issues.each do |issue|
         k=0
         #i cant push this code in methods

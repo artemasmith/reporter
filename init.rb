@@ -3,8 +3,8 @@ Redmine::Plugin.register :reporter do
 
   author 'Artem Kuznetsov'
 
-  description 'This is a plugin for Redmine'
+  description 'This is the reporting-tools plugin for Redmine'
   version '0.0.1'
-  url 'http://example.com/path/to/plugin'
-  author_url 'http://example.com/about'
+  url 'https://github.com/artemasmith/reporting-tools.git'
+  author_url 'https://github.com/artemasmith/reporting-tools.git'
 end
