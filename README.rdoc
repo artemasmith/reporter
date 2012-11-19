@@ -1,3 +1,5 @@
 = reporter
 
-Description goes here
+This is reporting plugin developed for project structure with 'Planed finish date' custom field.
+Standart end_date field is used to confirm compliteness of an issue.
+This plugin produce the reporter page where administrator can see how much issues were delayed and should be closely looked.
