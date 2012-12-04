@@ -1,4 +1,4 @@
-<h2>RepissuesController#index</h2>
+<h2>Отчет по выполняемым задачам</h2>
 
 <table class="list">
     <tr class="issue"> 
@@ -16,3 +16,10 @@
     <% end %>
     
 </table>
+
+<% other_formats_links do |f| %>
+  <%= f.link_to 'Atom', :url => params.merge(:key => User.current.rss_key) %>
+  <%= f.link_to 'CSV', :url => params, :onclick => "showModal('csv-export-options', '330px'); return false;" %>
+  <%= f.link_to 'PDF', :url => params %>
+<% end %>
+

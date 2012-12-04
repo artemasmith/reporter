@@ -1,48 +1,69 @@
+#!/bin/env ruby
+#encoding: utf-8
+
 module RepissuesHelper
 
 include ApplicationHelper
 
+
 def render_title(k)
     s= case k
-    when :assigned_to_id then :performer
+    when :id then "ID"
+    when :assigned_to_id then "Исполнитель"
+    when :subject then "Задача"
+    when :project_id then "Проект"
+    when :done_ratio then "Выполнено"
+    when :start_date then "Дата начала"
+    when :deadend then "Должна закончиться"
+    when :delayed_days then "Просрочена на"
     else k
     end
 end
 
+
+def get_issue_performer_name(v)
+    if !v.blank?
+        us=User.find_by_id(v)
+        path=""
+        usname=""
+        if us.blank?
+            us=Group.find_by_id(v)
+    	path = group_path(v)
+    	usname=us.lastname
+    	#path="a"
+        else
+            path = user_path(v)
+            usname=us.firstname + " " + us.lastname
+            #path="3"
+        end
+    else
+	return "Нет исполнителя"
+    end
+    res=usname
+    
+end
+
+
+
 def render_issue(k,v)
-#    s=case k
-#    when :assigned_to_id then Proc.new{return User.find_by_id(v).lastname}#+" "+User.find_by_id(v).firstname }#User.find_by_id(v) #[:firstname] #+ " " +User.find_by_id(v).lastname.to_s
-#    when :subject then link_to v, issue_path(Issue.find_by_subject(v))
-#    else v
-#    end
+    
     case k
 #	when :done_ratio
 #	    res=v+'p'
 	when :project_id
-	    res=Project.find_by_id(v).name
+	    t=v.split('-')
+	    res=link_to t[0],project_path(t[1])
 	when :assigned_to_id
-	    if !v.blank?
-		us=User.find_by_id(v)
-		path=""
-		usname=""
-		if us.blank?
-		    us=Group.find_by_id(v)
-		    path = group_path(v)
-		    usname=us.lastname
-		    #path="a"
-	    
-		else
-		    path = user_path(v)
-		    usname=us.firstname + " " + us.lastname
-		    #path="3"
-		end
+	    t=v.split('-')
+	    if !t[1].blank?
+		res = link_to t[0] ,t[1] # user_path(t[1])
 	    else
-		return "no performer"
+		res= "Нет исполнителя"
 	    end
-	    res= link_to usname, path
-	    #res=u[:firstname]
 	when :subject
-	    res = link_to v, issue_path(Issue.find_by_subject(v))
+	    t=v.split('-|-')
+	    res = link_to t[0],issue_path(t[1])
+#	    res="test"
 	else return v
     end
     return res
