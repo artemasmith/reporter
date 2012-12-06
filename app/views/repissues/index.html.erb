@@ -7,15 +7,18 @@
 	<% end %>
     </tr>
     
-    <% @resissues.each do |is| %>
-    <tr>	
-	<% is.each_pair do |k,v| %>
-	<td><%= render_issue(k,v) %></td>
-	<% end %>
+ <% @resissues.each do |is| %>
+    <tr>
+        <% is.each_pair do |k,v| %>
+        <td><%= render_issue(k,v) %></td>
+        <% end %>
     </tr>
-    <% end %>
-    
+    <% end %>    
 </table>
+
+
+
+<p class="pagination"><%= pagination_links_full @issue_pages, @issue_count %></p>
 
 <% other_formats_links do |f| %>
   <%= f.link_to 'Atom', :url => params.merge(:key => User.current.rss_key) %>

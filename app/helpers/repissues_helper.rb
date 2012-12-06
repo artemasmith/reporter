@@ -21,30 +21,6 @@ def render_title(k)
 end
 
 
-def get_issue_performer_name(v)
-    if !v.blank?
-        us=User.find_by_id(v)
-        path=""
-        usname=""
-        if us.blank?
-            us=Group.find_by_id(v)
-    	path = group_path(v)
-    	usname=us.lastname
-    	#path="a"
-        else
-            path = user_path(v)
-            usname=us.firstname + " " + us.lastname
-            #path="3"
-        end
-    else
-	return "Нет исполнителя"
-    end
-    res=usname
-    
-end
-
-
-
 def render_issue(k,v)
     
     case k
@@ -56,7 +32,7 @@ def render_issue(k,v)
 	when :assigned_to_id
 	    t=v.split('-')
 	    if !t[1].blank?
-		res = link_to t[0] ,t[1] # user_path(t[1])
+		res = link_to t[0],  user_path(t[1])
 	    else
 		res= "Нет исполнителя"
 	    end
