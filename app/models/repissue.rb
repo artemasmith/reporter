@@ -52,7 +52,7 @@ def self.all()
         if (s[0].to_s.to_time - Time.now) / 86400 < 0
             temp[:id]=issue[:id]
             temp[:subject]=issue[:subject].to_s + '-|-' + issue[:id].to_s
-            temp[:assigned_to_id]= Repissue.find_name_by_id(issue[:assigned_to_id]).to_s+ '-' + issue[:assigned_to_id].to_s
+            temp[:assigned_to_id]= find_name_by_id(issue[:assigned_to_id]).to_s+ '-' + issue[:assigned_to_id].to_s
             temp[:project_id]= Project.find_by_id(issue[:project_id]).to_s + '-' + issue[:project_id].to_s
             temp[:done_ratio]=issue[:done_ratio]
             temp[:start_date]=issue[:start_date]

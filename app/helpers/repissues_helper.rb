@@ -42,8 +42,6 @@ def render_issue(k,v)
 #	    res="test"
 	else return v
     end
-    return res
-return v
 end 
 
 end

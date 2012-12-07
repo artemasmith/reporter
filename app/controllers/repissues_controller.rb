@@ -5,10 +5,20 @@ class RepissuesController < ApplicationController
 #  helper :RepIssuesHelper
 
   def index        
+    #set variables to paginate items
+    page=(params[:page] ||= 1).to_i
+    limit=25
+    offset=limit * (page - 1)
+    
+    
+    #get all delayed issues
     @resissues=Repissue.all()
-    @limit=5
     @issue_count=@resissues.count
-    @issue_pages = Paginator.new self, @issue_count, @limit, params['page']
+    
+    
+    @issue_pages = Paginator.new self, @issue_count, limit, page
+    
+    @resissues=@resissues[offset..(offset + limit - 1)]
   end
 
   def show

@@ -2,20 +2,18 @@
 
 <table class="list">
     <tr class="issue"> 
-	<% @resissues[1].each_key do |k|%>
+	<% @resissues[0].each_key do |k|%>
 	<td> <%= render_title(k) %> </td>
 	<% end %>
-    </tr>
-    
+    </tr>    
  <% @resissues.each do |is| %>
     <tr>
         <% is.each_pair do |k,v| %>
         <td><%= render_issue(k,v) %></td>
         <% end %>
     </tr>
-    <% end %>    
+    <% end %>
 </table>
-
 
 
 <p class="pagination"><%= pagination_links_full @issue_pages, @issue_count %></p>
