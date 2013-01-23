@@ -3,7 +3,7 @@
 
 class Repissue < ActiveRecord::Base
 
-
+#return performer name by id
 def self.find_name_by_id(v)
     if !v.blank?
         us=User.find_by_id(v)        
@@ -22,7 +22,12 @@ def self.find_name_by_id(v)
     
 end
 
-def self.all()
+#return all exxeded and soon ended issues
+#mode - determine which issues we return
+#:exceed-we return exceeded issues
+#soon-we return only soon ended tasks
+#all-we return all tasks
+def self.all(mode)
     
     issues=Issue.find(:all, :conditions => ["status_id < 9"])
     issues.concat(Issue.find(:all, :conditions => ["status_id > 11"]))
@@ -46,10 +51,24 @@ def self.all()
         end
 
         #here we compare custom values dates to current date
+        max=0
+        min=-10000
+    
+
+	case mode
+	    when "soon"
+		max=3
+		min=0
+	    when "all"
+		max=3
+	end
+	
+	
 
         temp={}
+        delta=(s[0].to_s.to_time - Time.now) / 86400
         
-        if (s[0].to_s.to_time - Time.now) / 86400 < 0
+        if  delta <= max and delta > min 
             temp[:id]=issue[:id]
             temp[:subject]=issue[:subject].to_s + '-|-' + issue[:id].to_s
             temp[:assigned_to_id]= find_name_by_id(issue[:assigned_to_id]).to_s+ '-' + issue[:assigned_to_id].to_s
@@ -57,7 +76,7 @@ def self.all()
             temp[:done_ratio]=issue[:done_ratio]
             temp[:start_date]=issue[:start_date]
             temp[:deadend] = s[0].to_s
-            temp[:delayed_days]=((Time.now - s[0].to_time) / 86400).ceil
+            temp[:delayed_days]=delta.ceil.abs
             @resissues[j]=temp
             j+=1
         end
@@ -66,5 +85,6 @@ def self.all()
     return @resissues
     
 end
+
 
 end

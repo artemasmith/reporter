@@ -7,16 +7,28 @@ include ApplicationHelper
 
 
 def render_title(k)
-    s= case k
-    when :id then "ID"
-    when :assigned_to_id then "Исполнитель"
-    when :subject then "Задача"
-    when :project_id then "Проект"
-    when :done_ratio then "Выполнено"
-    when :start_date then "Дата начала"
-    when :deadend then "Должна закончиться"
-    when :delayed_days then "Просрочена на"
-    else k
+    case k
+		when :id 
+			return "ID"
+		when :assigned_to_id 
+			return "Исполнитель"
+		when :subject 
+			return "Задача"
+		when :project_id 
+			return "Проект"
+		when :done_ratio 
+			return "Выполнено"
+		when :start_date 
+			return "Дата начала"
+		when :deadend
+			return "Дата окончания"
+		when :delayed_days 
+			if !@umode.blank? and @umode=="exceed" 
+				return "Должна закончиться"
+			else
+				return "Дней до окончания"
+			end
+		else return k
     end
 end
 

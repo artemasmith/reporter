@@ -1,4 +1,25 @@
-<h2>Отчет по выполняемым задачам</h2>
+<h1 align="center"><%= @title%></h1>
+
+<%= form_tag({:controller => "repissues", :action => "index"}, :method => "get", :id => "query_form") do%>
+
+<div class="flash">
+<table class="files">
+<tr>
+	<td><%= select_tag(:period, options_for_select([["неделя",1],["месяц",2],["квартал",3],["год",4],["весь период",5]])) %></td>
+	
+</tr>
+<tr>
+	<td><%= radio_button_tag "mode", "exceed", @checked1 %>Отчет по просроченным</td>
+</tr>
+<tr>
+	<td><%= radio_button_tag "mode", "soon", @checked2 %>Скоро закроются</td>
+</tr>
+</table>
+<td><%= submit_tag("Отобразить")%></td>
+<% end %>
+</div>
+
+<% if !params[:commit].blank? %>
 
 <table class="list">
     <tr class="issue"> 
@@ -18,9 +39,4 @@
 
 <p class="pagination"><%= pagination_links_full @issue_pages, @issue_count %></p>
 
-<% other_formats_links do |f| %>
-  <%= f.link_to 'Atom', :url => params.merge(:key => User.current.rss_key) %>
-  <%= f.link_to 'CSV', :url => params, :onclick => "showModal('csv-export-options', '330px'); return false;" %>
-  <%= f.link_to 'PDF', :url => params %>
 <% end %>
-
