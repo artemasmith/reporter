@@ -17,6 +17,7 @@ class RepissuesController < ApplicationController
     @umode=""
 	@checked1=false
 	@checked2=false
+	@selected=7
 	
 	if params[:period].blank?
 		period=7
@@ -35,6 +36,7 @@ class RepissuesController < ApplicationController
 			when "exceed"
 				@title="Отчет по просроченным задачам c " + since.to_s
 				@checked1=true				
+				@selected=params[:period]
 			when "soon"
 				@title="Скоро должны быть завершены"
 				@checked2=true
