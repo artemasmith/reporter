@@ -18,6 +18,13 @@ class RepissuesController < ApplicationController
 	@checked1=false
 	@checked2=false
 	
+	if params[:period].blank?
+		period=7
+	else
+		period=params[:period].to_i
+		since=Repissue.get_start_date(period)
+	end
+	
     if params[:mode].blank?
 		params[:mode]= "soon"
 		@umode=:exceed 
@@ -26,8 +33,8 @@ class RepissuesController < ApplicationController
 		@umode=params[:mode]
 		case @umode
 			when "exceed"
-				@title="Отчет по просроченным задачам"
-				@checked1=true
+				@title="Отчет по просроченным задачам c " + since.to_s
+				@checked1=true				
 			when "soon"
 				@title="Скоро должны быть завершены"
 				@checked2=true
@@ -36,7 +43,8 @@ class RepissuesController < ApplicationController
     end
     
     #get all delayed issues
-    @resissues=Repissue.all(@umode)
+	@resissues={}
+    @resissues=Repissue.all(@umode,period)
     @issue_count=@resissues.count
     
     

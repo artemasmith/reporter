@@ -24,7 +24,7 @@ def render_title(k)
 			return "Дата окончания"
 		when :delayed_days 
 			if !@umode.blank? and @umode=="exceed" 
-				return "Должна закончиться"
+				return "Просрочена на"
 			else
 				return "Дней до окончания"
 			end

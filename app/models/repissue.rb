@@ -22,12 +22,32 @@ def self.find_name_by_id(v)
     
 end
 
+#check should we return task by our conditions when we need exceeded tasks or soon-closed tasks
+def self.check_to_save(mode,period,end_date)
+	delta=end_date.to_date - Date.today
+	case mode
+		when "exceed"
+			if delta.to_i<0 and  end_date.to_date>= get_start_date(period)
+				return true
+			end
+		when "soon"
+			if delta >0 and delta.abs.ceil <= 3
+				return true
+			end
+	end
+	return false
+end
+
+def self.get_start_date(period)
+	start_day=(Date.today-period).beginning_of_month
+end
+
 #return all exxeded and soon ended issues
 #mode - determine which issues we return
 #:exceed-we return exceeded issues
 #soon-we return only soon ended tasks
 #all-we return all tasks
-def self.all(mode)
+def self.all(mode, period = 7)
     
     issues=Issue.find(:all, :conditions => ["status_id < 9"])
     issues.concat(Issue.find(:all, :conditions => ["status_id > 11"]))
@@ -51,24 +71,11 @@ def self.all(mode)
         end
 
         #here we compare custom values dates to current date
-        max=0
-        min=-10000
-    
-
-	case mode
-	    when "soon"
-		max=3
-		min=0
-	    when "all"
-		max=3
-	end
-	
-	
-
+        	
         temp={}
-        delta=(s[0].to_s.to_time - Time.now) / 86400
+        delta=(s[0].to_s.to_date - Date.today)
         
-        if  delta <= max and delta > min 
+        if  check_to_save(mode,period,s[0].to_s)
             temp[:id]=issue[:id]
             temp[:subject]=issue[:subject].to_s + '-|-' + issue[:id].to_s
             temp[:assigned_to_id]= find_name_by_id(issue[:assigned_to_id]).to_s+ '-' + issue[:assigned_to_id].to_s
@@ -76,7 +83,7 @@ def self.all(mode)
             temp[:done_ratio]=issue[:done_ratio]
             temp[:start_date]=issue[:start_date]
             temp[:deadend] = s[0].to_s
-            temp[:delayed_days]=delta.ceil.abs
+            temp[:delayed_days]=delta.to_i.abs
             @resissues[j]=temp
             j+=1
         end

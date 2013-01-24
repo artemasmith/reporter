@@ -5,12 +5,13 @@
 <div class="flash">
 <table class="files">
 <tr>
-	<td><%= select_tag(:period, options_for_select([["неделя",1],["месяц",2],["квартал",3],["год",4],["весь период",5]])) %></td>
 	
+	<td><%= radio_button_tag "mode", "exceed", @checked1 %>Отчет по просроченным за период: </td>
+	<td><%= select_tag(:period, options_for_select([["неделя",7],["месяц",30],["квартал",120],["год",365],["весь период",1000]])) %></td>
 </tr>
-<tr>
-	<td><%= radio_button_tag "mode", "exceed", @checked1 %>Отчет по просроченным</td>
-</tr>
+
+	
+
 <tr>
 	<td><%= radio_button_tag "mode", "soon", @checked2 %>Скоро закроются</td>
 </tr>
@@ -21,6 +22,7 @@
 
 <% if !params[:commit].blank? %>
 
+<% if !@resissues.blank?%>
 <table class="list">
     <tr class="issue"> 
 	<% @resissues[0].each_key do |k|%>
@@ -35,8 +37,11 @@
     </tr>
     <% end %>
 </table>
-
-
 <p class="pagination"><%= pagination_links_full @issue_pages, @issue_count %></p>
+<%else%>
+<h3> В заданный период просроченных задач нет.</h3>
+<% end%>
+
+
 
 <% end %>
