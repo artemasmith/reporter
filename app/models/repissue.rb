@@ -23,6 +23,7 @@ def self.find_name_by_id(v)
 end
 
 #check should we return task by our conditions when we need exceeded tasks or soon-closed tasks
+#unnecessary function
 def self.check_to_save(mode,period,end_date)
 	delta=end_date.to_date - Date.today
 	case mode
@@ -49,44 +50,29 @@ end
 #all-we return all tasks
 def self.all(mode, period = 7)
     
-    issues=Issue.find(:all, :conditions => ["status_id < 9"])
-    issues.concat(Issue.find(:all, :conditions => ["status_id > 11"]))
+    if mode=="soon"
+        issues=Issue.find(:all, :conditions => ["DATEDIFF(CURDATE(), due_date)<=3 and (status_id < 9 or status_id > 11)"])
+    else
+	start_date=get_start_date(period)
+	issues=Issue.find(:all, :conditions => ["DATEDIFF(due_date," + start_date.to_s + " )<="+period.to_s+" and (status_id < 9 or status_id > 11)"])
+    end
 
-    s=[]
     @resissues=[]
     j=0
 
     issues.each do |issue|
-        k=0
-        #i cant push this code in methods
-        #here we get custom_fields of issue
-        if !issue.custom_field_values.empty?
-            value = issue.custom_field_values
-            for i in 0..value.size-1
-                if !value[i].blank?
-                    s[k]=value[i].to_s
-                    k+=1
-                end
-            end
-        end
-
-        #here we compare custom values dates to current date
-        	
         temp={}
-        delta=(s[0].to_s.to_date - Date.today)
-        
-        if  check_to_save(mode,period,s[0].to_s)
-            temp[:id]=issue[:id]
-            temp[:subject]=issue[:subject].to_s + '-|-' + issue[:id].to_s
-            temp[:assigned_to_id]= find_name_by_id(issue[:assigned_to_id]).to_s+ '-' + issue[:assigned_to_id].to_s
-            temp[:project_id]= Project.find_by_id(issue[:project_id]).to_s + '-' + issue[:project_id].to_s
-            temp[:done_ratio]=issue[:done_ratio]
-            temp[:start_date]=issue[:start_date]
-            temp[:deadend] = s[0].to_s
-            temp[:delayed_days]=delta.to_i.abs
-            @resissues[j]=temp
-            j+=1
-        end
+        delta=(issue[:due_date].to_s.to_date - Date.today)
+        temp[:id]=issue[:id]
+        temp[:subject]=issue[:subject].to_s + '-|-' + issue[:id].to_s
+        temp[:assigned_to_id]= find_name_by_id(issue[:assigned_to_id]).to_s+ '-' + issue[:assigned_to_id].to_s
+        temp[:project_id]= Project.find_by_id(issue[:project_id]).to_s + '-' + issue[:project_id].to_s
+        temp[:done_ratio]=issue[:done_ratio]
+        temp[:start_date]=issue[:start_date]
+        temp[:deadend] = issue[:due_date]  #s[0].to_s
+        temp[:delayed_days]=delta.to_i.abs
+        @resissues[j]=temp
+        j+=1
         
     end
     return @resissues
