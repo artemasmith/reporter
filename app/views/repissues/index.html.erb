@@ -7,7 +7,7 @@
 <tr>
 	
 	<td><%= radio_button_tag "mode", "exceed", @checked1 %>Отчет по просроченным за период: </td>
-	<td><%= select_tag(:period, options_for_select([["неделя",7],["месяц",30],["квартал",120],["год",365],["весь период",1000]],@selected)) %></td>
+	<td><%= select_tag(:period, options_for_select([["неделя",7],["месяц",30],["квартал",90],["год",365],["весь период",1000]],@selected)) %></td>
 </tr>
 
 	
