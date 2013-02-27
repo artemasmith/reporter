@@ -1,4 +1,3 @@
 = reporter
 
-This is simple reporting plugin. If you use 'due_date' field as planning end date, it will be usefull for tracking exceeded tasks by one click.
-This plugin produce the reporter page where administrator can see how much issues were delayed and should be closely looked.
+This is simple reporting plugin. Make your issue reports by one click/ It searches issues by each projects and sho you complete view of soon exceeding and  exceeded tasks.
