@@ -60,7 +60,7 @@ end
 #:exceed-we return exceeded issues
 #soon-we return only soon ended tasks
 #all-we return all tasks
-def self.all(mode, period = 7)
+def self.all(mode, period = 7, defsort="delayed_days")
     
     issues=[]
     
@@ -90,7 +90,10 @@ def self.all(mode, period = 7)
         j+=1
         
     end
-    return @resissues
+    
+    #@resissues=@resissues.sort_by {|is| is[defsort.to_sym]}
+    
+    return @resissues.sort_by {|is| is[defsort.to_sym]}
     
 end
 

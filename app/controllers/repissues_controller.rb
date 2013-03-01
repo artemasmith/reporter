@@ -44,9 +44,13 @@ class RepissuesController < ApplicationController
 	
     end
     
+    unless params[:sort].blank?
+	ssort=params[:sort]
+    end
+    
     #get all delayed issues
 	@resissues={}
-    @resissues=Repissue.all(@umode,period)
+    @resissues=Repissue.all(@umode,period,ssort)
     @issue_count=@resissues.count
     
     

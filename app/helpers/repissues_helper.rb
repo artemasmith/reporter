@@ -5,28 +5,31 @@ module RepissuesHelper
 
 include ApplicationHelper
 
+def sort_link(title,column)
+    return link_to title,repissues_path(:sort=>column,:mode=>params[:mode],:period=>params[:period],:commit=>params[:commit])
+end
 
 def render_title(k)
     case k
 		when :id 
-			return "ID"
+			return sort_link "ID","id"
 		when :assigned_to_id 
-			return "Исполнитель"
+			return sort_link "Исполнитель","assignet_to_id"
 		when :subject 
-			return "Задача"
+			return sort_link "Задача", "subject"
 		when :project_id 
-			return "Проект"
-		when :done_ratio 
-			return "Выполнено"
+			return sort_link "Проект", "project_id"
+		when :done_ratio
+			return sort_link "Выполнено", "done_ratio"
 		when :start_date 
-			return "Дата начала"
+			return sort_link "Дата начала", "start_date"
 		when :deadend
-			return "Дата окончания"
+			return sort_link "Дата окончания", "deadend"
 		when :delayed_days 
 			if !@umode.blank? and @umode=="exceed" 
-				return "Просрочена на"
+				return sort_link "Просрочена на", "delayed_days"
 			else
-				return "Дней до окончания"
+				return sort_link "Дней до окончания", "delayed_days"
 			end
 		else return k
     end
