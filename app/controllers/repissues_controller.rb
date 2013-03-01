@@ -46,6 +46,8 @@ class RepissuesController < ApplicationController
     
     unless params[:sort].blank?
 	ssort=params[:sort]
+    else 
+	ssort="delayed_days"
     end
     
     #get all delayed issues

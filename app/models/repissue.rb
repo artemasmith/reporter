@@ -60,7 +60,7 @@ end
 #:exceed-we return exceeded issues
 #soon-we return only soon ended tasks
 #all-we return all tasks
-def self.all(mode, period = 7, defsort="delayed_days")
+def self.all(mode, period = 7, defsort = "delayed_days")
     
     issues=[]
     
@@ -91,9 +91,14 @@ def self.all(mode, period = 7, defsort="delayed_days")
         
     end
     
-    #@resissues=@resissues.sort_by {|is| is[defsort.to_sym]}
+#    if defsort.blank?
+#	defsort="delayed_days"
+#	echo "defsort is nil"
+    #end
     
-    return @resissues.sort_by {|is| is[defsort.to_sym]}
+    @resissues=@resissues.sort_by {|is| is[defsort.to_sym]}
+    
+    return @resissues
     
 end
 
