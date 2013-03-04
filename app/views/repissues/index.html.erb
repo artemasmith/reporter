@@ -26,7 +26,7 @@
 <table class="list">
     <tr class="issue"> 
 	<% @resissues[0].each_key do |k|%>
-	<td> <%= render_title(k) %> </td>
+	<th> <%= render_title(k) %> </th>
 	<% end %>
     </tr>    
  <% @resissues.each do |is| %>
