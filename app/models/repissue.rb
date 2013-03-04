@@ -86,6 +86,7 @@ def self.all(mode, period = 7, defsort = "delayed_days")
         temp[:start_date]=issue[:start_date]
         temp[:deadend] = issue[:due_date]
         temp[:delayed_days]=delta.to_i.abs
+        temp[:priority_id]=issue[:priority_id]
         @resissues[j]=temp
         j+=1
         

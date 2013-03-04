@@ -3,7 +3,7 @@
 <%= form_tag({:controller => "repissues", :action => "index"}, :method => "get", :id => "query_form") do%>
 
 <div class="flash">
-<table class="files">
+<table class="files" style="width:50%">
 <tr>
 	
 	<td><%= radio_button_tag "mode", "exceed", @checked1 %>Отчет по просроченным за период: </td>
@@ -23,20 +23,22 @@
 <% if !params[:commit].blank? %>
 
 <% if !@resissues.blank?%>
-<table class="list">
-    <tr class="issue"> 
+<div class="autoscroll">
+<table class="list issues">
+    <tr class="sort desc "> 
 	<% @resissues[0].each_key do |k|%>
 	<th> <%= render_title(k) %> </th>
 	<% end %>
     </tr>    
  <% @resissues.each do |is| %>
-    <tr>
+    <tr class= " <%= priority_line(is)%> " >
         <% is.each_pair do |k,v| %>
-        <td><%= render_issue(k,v) %></td>
+        <td class=" <%= render_td_class(k) %>  " ><%= render_issue(k,v) %></td>
         <% end %>
     </tr>
     <% end %>
 </table>
+</div>
 <p class="pagination"><%= pagination_links_full @issue_pages, @issue_count %></p>
 <%else%>
 <h3> В заданный период просроченных задач нет.</h3>
