@@ -404,6 +404,9 @@ ru:
   gui_validation_error_plural2: "%{count} ошибки"
   gui_validation_error_plural5: "%{count} ошибок"
 
+  
+  label_reports: Отчеты
+
   label_activity: Действия
   label_add_another_file: Добавить ещё один файл
   label_added_time_by: "Добавил(а) %{author} %{age} назад"
